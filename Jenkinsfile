@@ -3,7 +3,7 @@ pipeline {
         label "master"
     }
 	environment {
-		def scannerHome = tool 'sonarqube';
+		//def scannerHome = tool 'sonarqube';
 		def pom = readMavenPom file: ''
 	}
     tools {
