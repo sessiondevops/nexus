@@ -72,7 +72,7 @@ pipeline {
 				script {
 					def pom = readMavenPom file: ''
 					def workspace = WORKSPACE
-					sh "curl -iX GET "http://18.218.212.62:8081/service/rest/v1/search/assets?repository="${pom.artifactId}"&group=com.marsh&version=0.0.5&maven.extension=war""
+					sh "curl -u admin:admin123 -X GET 'http://50.18.247.196:8081/service/rest/v1/search/assets?repository=et2-Snapshot&group=com.marsh&version=0.0.5*&maven.extension=war'"
 					echo "Artifactes has been downloaded"
 					//sh "mv $workspace/${pom.artifactId}.war /var/lib/tomcat/webapps/et2.war"
 				}
