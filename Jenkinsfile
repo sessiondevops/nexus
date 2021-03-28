@@ -69,7 +69,7 @@ pipeline {
                 }				
                     
             }
-		}*/
+		}
 		/*stage("Download Artificates") {
 			steps {
 				script {
