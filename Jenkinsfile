@@ -66,19 +66,19 @@ pipeline {
                 }				
                     
             }
-		}
-		/*stage("Download Artificates") {
+		}*/
+		stage("Download Artificates") {
 			steps {
 				script {
 					def pom = readMavenPom file: ''
 					def workspace = WORKSPACE
-					sh "curl -iX GET 'http://18.218.212.62:9000/repository/et2-Snapshot/com/marsh/${pom.artifactId}/${pom.version}/${pom.artifactId}-*.war' -o $workspace/${pom.artifactId}.war"
+					sh "curl -iX GET 'http://18.218.212.62:8081/service/rest/v1/search/assets?repository=${pom.artifactId}&group=${pom.groupId}&version=0.0.5&maven.extension=war'"
 					echo "Artifactes has been downloaded"
-					sh "mv $workspace/${pom.artifactId}.war /var/lib/tomcat/webapps/et2.war"
+					//sh "mv $workspace/${pom.artifactId}.war /var/lib/tomcat/webapps/et2.war"
 				}
 			}
 		}
-		stage("Deploy") {
+		/*stage("Deploy") {
 			steps {
 				script {
 					sh "sudo systemctl start tomcat"
