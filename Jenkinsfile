@@ -2,6 +2,10 @@ pipeline {
     agent {
         label "master"
     }
+	environment {
+		def scannerHome = tool 'sonarqube';
+		def pom = readMavenPom file: ''
+	}
     tools {
         maven "Maven"
     }
@@ -24,7 +28,6 @@ pipeline {
 		/*stage('SonarQube analysis') {
 			steps {
 				script {
-					def scannerHome = tool 'sonarqube';
 					withSonarQubeEnv("sonarqube") { // If you have configured more than one global server connection, you can specify its name
 						sh "${scannerHome}/bin/sonar-scanner"
 					}
@@ -46,7 +49,7 @@ pipeline {
 		stage("Nexus Upload") {
 			steps {
 				script {
-					def pom = readMavenPom file: ''
+					
 					//echo  "${projectArtifactId} ${projectVersion}"
 					nexusArtifactUploader artifacts: [
 						[
@@ -67,10 +70,9 @@ pipeline {
                     
             }
 		}*/
-		stage("Download Artificates") {
+		/*stage("Download Artificates") {
 			steps {
 				script {
-					def pom = readMavenPom file: ''
 					def workspace = WORKSPACE
 					sh "curl -u admin:admin123 -X GET 'http://50.18.247.196:8081/service/rest/v1/search/assets?repository=et2-Snapshot&group=com.marsh&version=0.0.5*&maven.extension=war'"
 					echo "Artifactes has been downloaded"
@@ -78,7 +80,7 @@ pipeline {
 				}
 			}
 		}
-		/*stage("Deploy") {
+		stage("Deploy") {
 			steps {
 				script {
 					sh "sudo systemctl start tomcat"
