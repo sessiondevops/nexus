@@ -9,7 +9,7 @@ pipeline {
 		stage("Check Out") {
 			steps {
 				script {
-					git branch: 'main', credentialsId: 'Git_cred', url: 'https://github.com/sessiondevops/nexus.git'
+					git branch: 'main', credentialsId: 'Git_Cred', url: 'https://github.com/sessiondevops/nexus.git'
 					
 				}
 			}
@@ -21,7 +21,7 @@ pipeline {
 				}
 			}
 		} 
-		stage('SonarQube analysis') {
+		/*stage('SonarQube analysis') {
 			steps {
 				script {
 					def scannerHome = tool 'sonarqube';
@@ -42,7 +42,7 @@ pipeline {
 					}
 				}
 			}
-		}
+		}*/
 		stage("Nexus Upload") {
 			steps {
 				script {
@@ -58,7 +58,7 @@ pipeline {
 					], 
 						credentialsId: 'Nexus_Cred', 
 						groupId: "${pom.groupId}", 
-						nexusUrl: '18.216.1.222:8081', 
+						nexusUrl: '54.183.135.155:8081', 
 						nexusVersion: 'nexus3', 
 						protocol: 'http', 
 						repository: 'et2-Snapshot', 
@@ -67,7 +67,7 @@ pipeline {
                     
             }
 		}
-		stage("Download Artificates") {
+		/*stage("Download Artificates") {
 			steps {
 				script {
 					def pom = readMavenPom file: ''
@@ -84,11 +84,11 @@ pipeline {
 					sh "sudo systemctl start tomcat"
 				}
 			}
-		}
+		}*/
 	}
-	post {
+	/*post {
         always {
             deleteDir() /* clean up our workspace */
         }
-	}	
+	}*/
 }
