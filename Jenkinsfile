@@ -67,17 +67,19 @@ pipeline {
                     
             }
 		}
-		/*stage("Download Artificates") {
+		stage("Download Artificates") {
 			steps {
 				script {
+					def pom = readMavenPom file: ''
 					def workspace = WORKSPACE
-					sh "curl -u admin:admin123 -X GET 'http://50.18.247.196:8081/service/rest/v1/search/assets?repository=et2-Snapshot&group=com.marsh&version=0.0.5*&maven.extension=war'"
+					app_nexus_ver=$((curl -s -u admin:admin123 -X GET 'http://50.18.247.196:8081/service/rest/v1/search/assets?repository=et2-Snapshot&group=com.marsh&version=${pom.version}&maven.extension=war') | grep version | awk '{print $3}' | sed 's/\"//g')
+					sh "curl -u admin:admin123 -X GET 'http://50.18.247.196:8081/service/rest/v1/search/assets?repository=et2-Snapshot&group=${pom.groupId}&version=${app_nexus_ver}&maven.extension=war'"
 					echo "Artifactes has been downloaded"
 					//sh "mv $workspace/${pom.artifactId}.war /var/lib/tomcat/webapps/et2.war"
 				}
 			}
 		}
-		stage("Deploy") {
+		/*stage("Deploy") {
 			steps {
 				script {
 					sh "sudo systemctl start tomcat"
