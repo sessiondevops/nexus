@@ -58,7 +58,7 @@ pipeline {
 					], 
 						credentialsId: 'Nexus_Cred', 
 						groupId: "${pom.groupId}", 
-						nexusUrl: '54.183.135.155:8081', 
+						nexusUrl: '50.18.247.196:8081', 
 						nexusVersion: 'nexus3', 
 						protocol: 'http', 
 						repository: 'et2-Snapshot', 
