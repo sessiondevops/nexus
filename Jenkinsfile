@@ -4,7 +4,7 @@ pipeline {
     }
 	environment {
 		//def scannerHome = tool 'sonarqube';
-		def pom = readMavenPom file: ''
+		
 	}
     tools {
         maven "Maven"
@@ -49,7 +49,7 @@ pipeline {
 		stage("Nexus Upload") {
 			steps {
 				script {
-					
+					def pom = readMavenPom file: ''
 					//echo  "${projectArtifactId} ${projectVersion}"
 					nexusArtifactUploader artifacts: [
 						[
