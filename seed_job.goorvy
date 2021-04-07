@@ -6,7 +6,7 @@ pipelineJob('job-dsl-plugin') {
           remote {
             url('https://github.com/sessiondevops/nexus.git')
           }
-          branch('*/master')
+          branch('*/main')
         }
       }
       lightweight()
