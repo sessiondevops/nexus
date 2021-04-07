@@ -1,7 +1,23 @@
-multibranchPipelineJob('my-build') {
-    factory {
-        workflowBranchProjectFactory {
-            scriptPath('Jenkinsfile')
+def gitUrl = "https://github.com/sessiondevops/nexus.git"
+
+job("MyProject-Build") {
+    description "Builds MyProject from master branch."
+    parameters {
+        stringParam('COMMIT', 'HEAD', 'Commit to build')
+    }
+    scm {
+        git {
+            remote {
+                url gitUrl.
+                branch "origin/main"
+            }
+            extensions {
+                wipeOutWorkspace()
+                localBranch master
+            }
         }
+    }
+    steps {
+        shell "Look: I'm building master!"
     }
 }
