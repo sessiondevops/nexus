@@ -1,3 +1,5 @@
+package javaposse.jobdsl.dsl.helpers.scm
+
 def gitUrl = "https://github.com/sessiondevops/nexus.git"
 
 job("MyProject-Build") {
