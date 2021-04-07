@@ -1,25 +1,15 @@
-package javaposse.jobdsl.dsl.helpers.scm
-
-def gitUrl = "https://github.com/sessiondevops/nexus.git"
-
-job("MyProject-Build") {
-    description "Builds MyProject from master branch."
-    parameters {
-        stringParam('COMMIT', 'HEAD', 'Commit to build')
-    }
-    scm {
+pipelineJob('job-dsl-plugin') {
+  definition {
+    cpsScm {
+      scm {
         git {
-            remote {
-                url gitUrl
-                branch "main"
-            }
-            extensions {
-                wipeOutWorkspace()
-                localBranch main
-            }
+          remote {
+            url('https://github.com/sessiondevops/nexus.git')
+          }
+          branch('*/master')
         }
+      }
+      lightweight()
     }
-    steps {
-        shell "Look: I'm building master!"
-    }
+  }
 }
