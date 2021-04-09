@@ -9,7 +9,7 @@ pipelineJob('job-dsl-plugin') {
           branch('*/main')
         }
       }
-      lightweight()
+      
     }
   }
 }
