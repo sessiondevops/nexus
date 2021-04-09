@@ -10,6 +10,10 @@ job('example-1') {
                 name('Sample')
                 url('https://github.com/sessiondevops/sample.git')
             }
+            def releaseScript = readFileFromWorkspace('jenkinsfile')
+            steps {
+                    groovyCommand(releaseScript)
+            }
             extensions {
                 cleanAfterCheckout()
                 relativeTargetDirectory('repo1')
