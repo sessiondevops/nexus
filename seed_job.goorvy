@@ -1,23 +1,12 @@
-job('example-1') {
+job('example') {
     scm {
-        git {
-            remote {
-                name('Nexus')
-                url('https://github.com/sessiondevops/nexus.git')
-            }
-            
-            remote {
-                name('Sample')
-                url('https://github.com/sessiondevops/sample.git')
-            }
-            def releaseScript = readFileFromWorkspace('Jenkinsfile')
-            steps {
-                    groovyCommand(releaseScript)
-            }
-            extensions {
-                cleanAfterCheckout()
-                relativeTargetDirectory('repo1')
-            }
-        }
+        github('https://github.com/sessiondevops/nexus.git', 'development')
+    }
+    def releaseScript = readFileFromWorkspace('Jenkinsfile')
+    steps {
+        groovyCommand(releaseScript)
+    }
+    triggers {
+        githubPush()
     }
 }
