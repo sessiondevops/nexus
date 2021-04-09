@@ -5,7 +5,7 @@ pipeline {
 	stages {
 		stage ("test") {
 			steps {
-				sh 'echo "development environment Nikhil"'
+				sh 'echo "development environment Nikhil.."'
 			}
 		}
 	}
