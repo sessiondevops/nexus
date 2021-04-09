@@ -10,10 +10,11 @@ pipelineJob('job-dsl-plugin') {
         }
 
       }
-            triggers {
-        githubPush()
-    }
+  
       lightweight()
+    }
+    triggers {
+        githubPush()
     }
   }
 }
