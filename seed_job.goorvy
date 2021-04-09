@@ -7,6 +7,6 @@ job('example') {
         groovyCommand(releaseScript)
     }
     triggers {
-        githubPush()
+        pollSCM('*/1 * * * *')
     }
 }
