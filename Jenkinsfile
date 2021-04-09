@@ -9,9 +9,9 @@ pipeline {
 	stages {
 		stage ("git checkout") {
 			steps {
-				git branch: 'development', credentialsId: 'Git_Cred', url: $env.GIT_Sample
-				git branch: 'development', credentialsId: 'Git_Cred', url: $env.GIT_Nexus
-				echo $env.BRANCH_NAME
+				git branch: 'development', credentialsId: 'Git_Cred', url: '${env.GIT_Sample}'
+				git branch: 'development', credentialsId: 'Git_Cred', url: '${env.GIT_Nexus}'
+				echo 'Pulling...' + env.BRANCH_NAME
 			}
 		}
 	}
