@@ -1,4 +1,4 @@
-job("'${env.BRANCH_NAME}'_example") {
+job("'${BRANCH_NAME}'_example") {
     scm {
         github('https://github.com/sessiondevops/nexus.git', 'development')
     }
