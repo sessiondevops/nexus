@@ -8,7 +8,11 @@ pipelineJob('job-dsl-plugin') {
           }
           branch('*/development')
         }
+
       }
+            triggers {
+        githubPush()
+    }
       lightweight()
     }
   }
