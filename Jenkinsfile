@@ -2,10 +2,16 @@ pipeline {
     agent {
         label "master"
     }
+    environment {
+    	GIT_Sample='https://github.com/sessiondevops/sample.git'
+	GIT_Nexus='https://github.com/sessiondevops/nexus.git'
+  	}
 	stages {
-		stage ("test") {
+		stage ("git checkout") {
 			steps {
-				sh 'echo "development environment Nikhil.."'
+				git branch: 'development', credentialsId: 'Git_Cred', url: $env.GIT_Sample
+				git branch: 'development', credentialsId: 'Git_Cred', url: $env.GIT_Nexus
+				echo $env.BRANCH_NAME
 			}
 		}
 	}
