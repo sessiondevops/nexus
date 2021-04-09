@@ -6,6 +6,13 @@ pipeline {
         maven "Maven"
     }
 	stages {
+		stage {
+			step {
+				sh 'echo "development environment"'
+			}
+		}
+	}
+	/*stages {
 		stage("Check Out") {
 			steps {
 				script {
@@ -21,7 +28,7 @@ pipeline {
 				}
 			}
 		} 
-		/*stage('SonarQube analysis') {
+		stage('SonarQube analysis') {
 			steps {
 				script {
 					//def scannerHome = tool 'sonarqube';
@@ -42,7 +49,7 @@ pipeline {
 					}
 				}
 			}
-		}*/
+		}
 		stage("Nexus Upload") {
 			steps {
 				script {
@@ -79,14 +86,14 @@ pipeline {
 				}
 			}
 		}
-		/*stage("Deploy") {
+		stage("Deploy") {
 			steps {
 				script {
 					sh "sudo systemctl start tomcat"
 				}
 			}
-		}*/
-	}
+		}
+	}*/
 	/*post {
         always {
             deleteDir()  clean up our workspace 
