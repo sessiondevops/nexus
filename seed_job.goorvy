@@ -1,6 +1,19 @@
-def releaseScript = readFileFromWorkspace('jenkinsfile')
 job('example-1') {
-    steps {
-        groovyCommand(releaseScript)
+    scm {
+        git {
+            remote {
+                name('Nexus')
+                url('https://github.com/sessiondevops/nexus.git')
+            }
+            
+            remote {
+                name('Sample')
+                url('https://github.com/sessiondevops/sample.git')
+            }
+            extensions {
+                cleanAfterCheckout()
+                relativeTargetDirectory('repo1')
+            }
+        }
     }
 }
