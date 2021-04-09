@@ -14,7 +14,7 @@ pipelineJob('job-dsl-plugin') {
       lightweight()
     }
     triggers {
-        githubPush()
+        scm('H/15 * * * *')
     }
   }
 }
