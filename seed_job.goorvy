@@ -1,20 +1,6 @@
-pipelineJob('job-dsl-plugin') {
-  definition {
-    cpsScm {
-      scm {
-        git {
-          remote {
-            url('https://github.com/sessiondevops/nexus.git')
-          }
-          branch('*/development')
-        }
-
-      }
-  
-      lightweight()
+def releaseScript = readFileFromWorkspace('jenkinsfile')
+job('example-1') {
+    steps {
+        groovyCommand(releaseScript)
     }
-    triggers {
-        scm('H/15 * * * *')
-    }
-  }
 }
