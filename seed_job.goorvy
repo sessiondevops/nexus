@@ -1,4 +1,4 @@
-job('GIT_BRANCH') {
+job('GIT_BRANCH_1') {
     scm {
         github('https://github.com/sessiondevops/nexus.git', 'development')
     }
@@ -9,4 +9,5 @@ job('GIT_BRANCH') {
     triggers {
         scm('*/1 * * * *')
     }
+    println env.JOB_NAME
 }
