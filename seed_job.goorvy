@@ -5,7 +5,6 @@ job('GIT_BRANCH') {
     def releaseScript = readFileFromWorkspace('Jenkinsfile')
     steps {
         groovyCommand(releaseScript)
-        echo $GIT_BRANCH
     }
     triggers {
         scm('*/1 * * * *')
