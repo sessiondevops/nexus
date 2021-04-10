@@ -1,5 +1,4 @@
-def branch_name = ${env.Brach_Name}
-job('${branch_name}_example') {
+job('$GIT_BRANCH_example') {
     scm {
         github('https://github.com/sessiondevops/nexus.git', 'development')
     }
