@@ -7,7 +7,7 @@
 
 	<groupId>com.marsh</groupId>
 	<artifactId>et2</artifactId>
-	<version>19.0-RELEASE</version>
+	<version>20.0-RELEASE</version>
 	<packaging>war</packaging>
 
 	<name>et2 Maven Webapp</name>
