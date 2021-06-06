@@ -1,1 +1,1 @@
-FROM ubuntu:latest
+FROM httpd:latest
