@@ -1,0 +1,83 @@
+def pom 
+def nexusRepoName
+pipeline{
+    agent any
+	tools{
+		maven "Maven"
+	}
+    stages
+    {
+		stage("GIT"){
+            steps{
+                git credentialsId: 'git_cred', url: 'https://github.com/sessiondevops/nexus.git'
+                //git branch: 'main', credentialsId: 'git_cred', url: 'https://github.com/sessiondevops/nikhil.git'
+            }
+        }
+        stage("Sonarqube_Chek"){
+           steps{
+				script{
+					def scannerHome = tool 'Sonarqube';
+					withSonarQubeEnv("Sonarqube"){
+						sh "${scannerHome}/bin/sonar-scanner"
+					}
+				}
+		   } 
+            
+        }
+		stage("Quality Gate Check"){
+			steps{
+				script{
+					timeout(time: 3, unit: 'MINUTES'){
+						def qg = waitForQualityGate();
+						if (qg.status != 'OK'){
+							error "Pipleline aborted due to QG failure: ${qg.status}"
+						}
+						
+					}
+				}
+				
+			}
+		}
+        stage("Maven"){
+            steps{
+                sh 'mvn clean install'
+            }
+        }
+        stage("Nexus Arti upload")
+        {
+            steps{
+				script{
+					
+			pom = readMavenPom file : ''
+			nexusRepoName = pom.version.endsWith("SNAPSHOT") ? "${pom.artifactId}-snapshot" : "${pom.artifactId}-release"
+			
+					nexusArtifactUploader artifacts: [[artifactId: "${pom.artifactId}", classifier: '', file: "target/${pom.artifactId}-${pom.version}.${pom.packaging}", type: "${pom.packaging}"]], credentialsId: 'nexus_cred', groupId: "${pom.groupId}", nexusUrl: '54.219.162.231:8081', nexusVersion: 'nexus3', protocol: 'http', repository: nexusRepoName, version: "${pom.version}"
+					echo "${nexusRepoName}"
+					
+					
+				}
+            }
+        }
+		stage("Download war file"){
+			steps{
+				script{
+				    echo "${pom.artifactId}-release"
+			        if ( nexusRepoName == "${pom.artifactId}-release" )
+				    {
+				    //def pom = readMavenPom file : ''
+				        sh "curl -u admin:admin 'http://54.219.162.231:8081/repository/${nexusRepoName}/com/marsh/${pom.artifactId}/${pom.version}/${pom.artifactId}-${pom.version}.war' -o ${pom.artifactId}-${pom.version}.war"
+				    } 
+				 else {
+					    sh "curl -u admin:admin 'http://54.219.162.231:8081/repository/${nexusRepoName}/com/marsh/$pom.artifactId/$pom.version/maven-metadata.xml' | grep value > app1.txt" 
+					    sh "cat app1.txt | sed 's/ //g' > spa.txt"
+					    sh "sed -e 's/<[^>]*>//g' < spa.txt > tagg.txt"
+					    sh "truncate -s -1 tagg.txt"
+					    env.Filename = readFile 'tagg.txt'
+					    sh "curl -u admin:admin 'http://54.219.162.231:8081/repository/${nexusRepoName}/com/marsh/${pom.artifactId}/${pom.version}/${pom.artifactId}-${Filename}.war' -o ${pom.artifactId}-${pom.version}.war"
+				        }
+			    	}
+			}
+		}
+        
+    }
+}
