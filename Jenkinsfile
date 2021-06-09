@@ -97,7 +97,7 @@ pipeline{
                 sh "docker rmi $registry:$BUILD_NUMBER" 
             }
         }*/
-        stage("K8 Nodes"){
+        /*stage("K8 Nodes"){
             steps{
                 kubernetesDeploy(
                     configs: 'mongo-deployment.yaml',
@@ -106,6 +106,6 @@ pipeline{
                     enableConfigSubstitution: true
                 )
             }
-        }
+        }*/
     }
 }
