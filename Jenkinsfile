@@ -9,6 +9,7 @@ pipeline{
         registry = "sessiondevops/multi" 
         registryCredential = 'Docker_Cred'
         dockeImage = ''
+        Nexus_URL = "http://54.176.18.106:8081"
     }
     stages
     {
@@ -52,7 +53,7 @@ pipeline{
                 script{ 
                     pom = readMavenPom file : ''
                     nexusRepoName = pom.version.endsWith("SNAPSHOT") ? "${pom.artifactId}-snapshot" : "${pom.artifactId}-release"
-                    nexusArtifactUploader artifacts: [[artifactId: "${pom.artifactId}", classifier: '', file: "target/${pom.artifactId}-${pom.version}.${pom.packaging}", type: "${pom.packaging}"]], credentialsId: 'Nexus_Cred', groupId: "${pom.groupId}", nexusUrl: '54.176.18.106:8081', nexusVersion: 'nexus3', protocol: 'http', repository: nexusRepoName, version: "${pom.version}"
+                    nexusArtifactUploader artifacts: [[artifactId: "${pom.artifactId}", classifier: '', file: "target/${pom.artifactId}-${pom.version}.${pom.packaging}", type: "${pom.packaging}"]], credentialsId: 'Nexus_Cred', groupId: "${pom.groupId}", nexusUrl: '${Nexus_URL}', nexusVersion: 'nexus3', protocol: 'http', repository: nexusRepoName, version: "${pom.version}"
                     echo "${nexusRepoName}"
                 }
             }
@@ -64,14 +65,14 @@ pipeline{
                     if ( nexusRepoName == "${pom.artifactId}-release" )
                     {
                     //def pom = readMavenPom file : ''
-                        sh "curl -u admin:admin 'http://54.176.18.106:8081/repository/${nexusRepoName}/com/marsh/${pom.artifactId}/${pom.version}/${pom.artifactId}-${pom.version}.war' -o ${pom.artifactId}.war"
+                        sh "curl -u admin:admin '${Nexus_URL}/repository/${nexusRepoName}/com/marsh/${pom.artifactId}/${pom.version}/${pom.artifactId}-${pom.version}.war' -o ${pom.artifactId}.war"
                     } else {
-                        sh "curl -u admin:admin 'http://54.176.18.106:8081/repository/${nexusRepoName}/com/marsh/$pom.artifactId/$pom.version/maven-metadata.xml' | grep value > app1.txt" 
+                        sh "curl -u admin:admin '${Nexus_URL}/repository/${nexusRepoName}/com/marsh/$pom.artifactId/$pom.version/maven-metadata.xml' | grep value > app1.txt" 
                         sh "cat app1.txt | sed 's/ //g' > spa.txt"
                         sh "sed -e 's/<[^>]*>//g' < spa.txt > tagg.txt"
                         sh "truncate -s -1 tagg.txt"
                         env.Filename = readFile 'tagg.txt'
-                        sh "curl -u admin:admin 'http://54.176.18.106:8081/repository/${nexusRepoName}/com/marsh/${pom.artifactId}/${pom.version}/${pom.artifactId}-${Filename}.war' -o ${pom.artifactId}.war"
+                        sh "curl -u admin:admin '${Nexus_URL}/repository/${nexusRepoName}/com/marsh/${pom.artifactId}/${pom.version}/${pom.artifactId}-${Filename}.war' -o ${pom.artifactId}.war"
                      }
                 }
              }
