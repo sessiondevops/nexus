@@ -10,7 +10,7 @@ pipeline{
 		stage("GIT"){
             steps{
                 git credentialsId: 'git_cred', url: 'https://github.com/sessiondevops/nexus.git'
-                ////git branch: 'main', credentialsId: 'git_cred', url: 'https://github.com/sessiondevops/nikhil.git'
+                //git branch: 'main', credentialsId: 'git_cred', url: 'https://github.com/sessiondevops/nikhil.git'
             }
         }
         stage("Sonarqube_Chek"){
