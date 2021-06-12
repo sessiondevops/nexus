@@ -1,0 +1,93 @@
+	• Current Working Directory: pwd
+	• Move to previous directory: cd -
+	• Home Directory of user: cd ~
+	• List of files with full details:  ls -altr
+	• Create a folder: mkdir <Folder_Name>
+	• Change to directory: cd <Folder_Name>
+	• Change file permissions: chmod 644 <filename>  , chmod 644 -R <folder name> (it will apply 644 permissions all subfolders and files inside given folder)
+	• Change file ownership: chown nexus: nexus <filename>  , chmod  nexus: nexus  -R <folder name> (it will apply 644 ownership all subfolders and files inside given folder)
+	• Create empty file: touch <file_Name>
+	• Compare and find differences in two files: diff <file1> <file2>
+	• To Check file system:  df -kh (it will give space result for root path and mount points)
+
+	• Disk usage in specific folder: du -sh *  (It will give all folders list along with size)
+
+	• RAM and Swap memory: free -h 
+              total        used        free      shared  buff/cache   available
+Mem:            31G         27G        793M        481M        3.2G        3.2G
+Swap:          2.0G        2.0G          0B
+
+	• CPU usage: ps -eo pid,ppid,cmd,%mem,%cpu --sort=-%cpu | head
+		top -b -n 1 | head -n 12  | tail -n 6
+	To get top process using more cpu
+
+	• TOP COMMAND OUTPUT: top
+top - 19:38:53 up 27 days, 23:19,  1 user,  load average: 0.24, 0.35, 0.34
+Tasks: 367 total,   1 running, 366 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  4.1 us,  2.1 sy,  0.0 ni, 93.6 id,  0.0 wa,  0.0 hi,  0.2 si,  0.0 st
+KiB Mem : 32761620 total,   849636 free, 28406956 used,  3505028 buff/cache
+KiB Swap:  2097148 total,        0 free,  2097148 used.  3451244 avail Mem
+
+   PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND
+ 64748 tcadmin   20   0   47.3g   1.9g  14504 S   3.3  6.2  19:27.66 java
+ 40221 tcadmin   20   0   53.7g   3.4g   6372 S   2.6 10.7  13:29.79 java
+
+Top command with Memory sort: top --> Shift & m
+
+
+	• To find out top 5 file with more size in specific path 
+du -a <Path>| sort -n -r | head -n 5
+find <PATH> -type f -exec du -Sh {} + | sort -rh | head -n 5
+
+	• Find specific GROUP files and folders in specific directory
+find <PATH>-group ftpusers
+find <PATH>-! group ftpusers (not owned by specific group)
+
+	• Find specific USER files and folders in specific directory
+find <PATH -user nexus
+find <PATH> ! -user guest (not owned by specific user)
+
+	• Find all files with a modification date older than 7 days:
+find <PATH> -mtime +7 -ls
+	• Find all files modified in the last 5 minutes in a directory and subdirectories:
+find <PATH> - -mmin -5 -ls
+	• Find all files with a modification date older than 5 minutes:
+find <PATH> - -mmin +5 -ls
+
+	• To find specific IP or Hostname
+Nslookup <IP or HOSTNAME> eg: nslookup google.com
+
+	• Specific port is open or not (destination process can be down)
+Telnet <DB_Hostname> 1523 
+
+	• To get specific process or service details 
+ps -ef | grep processname
+ps - list processes
+-e - show all processes, not just those belonging to the user
+-f - show processes in full format (more detailed than default)
+command 1 | command 2 - pass output of command 1 as input to command 2
+grep find lines containing a pattern
+processname - the pattern for grep to search for in the output of ps -ef
+
+	• To find out specific PORT or PROCESS are in use
+netstat -tulpn | grep <port>
+netstat -tulpn | grep <PROCESS>
+
+	• Top 10 lines in file
+head <file_Name>
+
+	• Last 10 lines in file or log
+tail <file_name>
+tail -f <file _name> (running logs will be apper)
+
+	• Find and replace in single file
+sed -i 's/SEARCH_REGEX/REPLACEMENT/g' INPUTFILE
+sed -i 's/\bfoo\b/linux/g' file.txt (changes will apply only on foo not on foobar, add  \b on both sides for each string )
+sed -i.bak 's/foo/linux/g' file.txt (command will take a backup and apply changes on files)
+find . -type f -exec sed -i 's/foo/bar/g' {} + (find and replace in all files in specific path)
+
+	• To print specific words from file: awk
+awk '{print $1,$2,$NF}' dennis_ritchie.txt ($NF is for last word in a file)
+
+	• If file copy from windows to linux, sometimes we get ^M is a carriage-return character, to remove that use below command in specific file
+:s/^M$//
