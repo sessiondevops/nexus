@@ -1,7 +1,5 @@
 pipeline {
-    agent {
-        label "master"
-    }
+    agent any
     /*tools {
         maven "Maven"
     }*/
@@ -79,7 +77,7 @@ pipeline {
 				}
 			}
 		}
-		/*stage("Deploy") {
+		stage("Deploy") {
 			steps {
 				script {
 					sh "sudo systemctl start tomcat"
@@ -90,6 +88,6 @@ pipeline {
 	post {
         always {
             deleteDir()  clean up our workspace 
-        }
-	}*/
+        }*/
+	}
 }
