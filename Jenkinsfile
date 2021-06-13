@@ -2,9 +2,9 @@ pipeline {
     agent {
         label "master"
     }
-    tools {
+    /*tools {
         maven "Maven"
-    }
+    }*/
 	stages {
 		stage("Check Out") {
 			steps {
@@ -14,14 +14,14 @@ pipeline {
 				}
 			}
 		}
-		stage("Build") {
+		/*stage("Build") {
 			steps {
 				script {
 					sh 'mvn clean install'
 				}
 			}
 		} 
-		/*stage('SonarQube analysis') {
+		stage('SonarQube analysis') {
 			steps {
 				script {
 					//def scannerHome = tool 'sonarqube';
@@ -42,7 +42,7 @@ pipeline {
 					}
 				}
 			}
-		}*/
+		}
 		stage("Nexus Upload") {
 			steps {
 				script {
@@ -85,9 +85,9 @@ pipeline {
 					sh "sudo systemctl start tomcat"
 				}
 			}
-		}*/
+		}
 	}
-	/*post {
+	post {
         always {
             deleteDir()  clean up our workspace 
         }
