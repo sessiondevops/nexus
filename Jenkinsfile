@@ -3,7 +3,7 @@ def nexusRepoName
 pipeline{
     agent any
     tools{
-        maven "Maven"
+        //maven "Maven"
     }
     environment { 
         registry = "sessiondevops/multi" 
