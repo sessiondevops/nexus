@@ -2,9 +2,9 @@ def pom
 def nexusRepoName
 pipeline{
     agent any
-    tools{
-        //maven "Maven"
-    }
+    /*tools{
+        maven "Maven"
+    }*/
     environment { 
         registry = "sessiondevops/multi" 
         registryCredential = 'Docker_Cred'
