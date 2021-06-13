@@ -7,7 +7,7 @@ pipeline {
 		stage("Check Out") {
 			steps {
 				script {
-					git branch: 'main', credentialsId: 'Git_Cred', url: 'https://github.com/sessiondevops/nexus.git'
+					git branch: 'master', credentialsId: 'Git_Cred', url: 'https://github.com/sessiondevops/nexus.git'
 					
 				}
 			}
