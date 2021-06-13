@@ -19,7 +19,7 @@ pipeline{
                 //git branch: 'main', credentialsId: 'Git_Cred', url: 'https://github.com/sessiondevops/nikhil.git'
             }
         }
-        stage("Sonarqube_Chek"){
+        /*stage("Sonarqube_Chek"){
            steps{
                 script{
                     def scannerHome = tool 'sonarqube';
@@ -97,7 +97,7 @@ pipeline{
             steps { 
                 sh "docker rmi $registry:$BUILD_NUMBER" 
             }
-        }*/
+        }
         stage("K8 Nodes"){
             steps{
                 kubernetesDeploy(
@@ -107,6 +107,6 @@ pipeline{
                     enableConfigSubstitution: true
                 )
             }
-        }
+        }*/
     }
 }
