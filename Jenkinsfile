@@ -101,19 +101,12 @@ pipeline{
         stage("K8 Nodes"){
             steps{
                 kubernetesDeploy(
-                    configs: 'mongo-deployment.yaml',
+                    sh "helm version"
                     kubeconfigId: 'K8_Creds',
                     //enableConfigsubstituion: true
                     enableConfigSubstitution: true
                 )
             }
         }*/
-        stage("helm"){
-            steps{
-                script{
-                sh "helm ls"
-                }
-            }
-        }
     }
 }
