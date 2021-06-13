@@ -108,5 +108,12 @@ pipeline{
                 )
             }
         }*/
+        stage("helm"){
+            steps{
+                script{
+                sh "helm ls"
+                }
+            }
+        }
     }
 }
