@@ -97,7 +97,7 @@ pipeline{
             steps { 
                 sh "docker rmi $registry:$BUILD_NUMBER" 
             }
-        }
+        }*/
         stage("K8 Nodes"){
             steps{
                 kubernetesDeploy(
@@ -107,6 +107,6 @@ pipeline{
                     enableConfigSubstitution: true
                 )
             }
-        }*/
+        }
     }
 }
