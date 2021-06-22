@@ -41,7 +41,7 @@ find <PATH> -type f -exec du -Sh {} + | sort -rh | head -n 5
 
 	• Find specific GROUP files and folders in specific directory
 find <PATH>-group ftpusers
-find <PATH>-! group ftpusers (not owned by specific group)
+find <PATH> ! -group ftpusers (not owned by specific group)
 
 	• Find specific USER files and folders in specific directory
 find <PATH -user nexus
