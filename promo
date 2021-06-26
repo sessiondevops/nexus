@@ -1,0 +1,104 @@
+Prometheus
+
+wget https://github.com/prometheus/prometheus/releases/download/v2.18.1/prometheus-2.18.1.linux-amd64.tar.gz
+tar -xvzf prometheus-2.18.1.linux-amd64.tar.gz
+groupadd --system prometheus
+useradd -s /sbin/nologin -r -g prometheus prometheus
+
+
+/var/lib/prometheus – Will be used to store prometheus data
+
+/etc/prometheus – will be used to store configuration files
+
+cp /root/prometheus-2.18.1.linux-amd64/prometheus /usr/local/bin/
+cp /root/prometheus-2.18.1.linux-amd64/promtool /usr/local/bin/
+cp -r /root/prometheus-2.18.1.linux-amd64/consoles  /etc/prometheus/
+cp -r /root/prometheus-2.18.1.linux-amd64/console_libraries /etc/prometheus/
+cp /root/prometheus-2.18.1.linux-amd64/prometheus.yml  /etc/prometheus/
+
+
+vi /etc/systemd/system/prometheus.service
+[Unit]
+Description=Prometheus
+Wants=network-online.target
+After=network-online.target
+[Service]
+User=prometheus
+Group=prometheus
+Type=simple
+ExecStart=/usr/local/bin/prometheus --config.file /etc/prometheus/prometheus.yml --storage.tsdb.path /var/lib/prometheus/ --web.console.templates=/etc/prometheus/consoles --web.console.libraries=/etc/prometheus/console_libraries
+[Install]
+WantedBy=multi-user.target
+
+
+systemctl start prometheus
+systemctl enable prometheus
+systemctl status prometheus
+
+
+http://serverip:9090
+
+
+
+Gafana
+wget https://dl.grafana.com/oss/release/grafana-8.0.3.linux-amd64.tar.gz
+tar -zxvf grafana-8.0.3.linux-amd64.tar.gz
+
+http://18.209.214.64:3000 
+
+default id and passwrod: admin
+
+
+
+
+
+Grafana and Prometheus, both help us in tackling issues related to complex data in a simplified manner.
+
+Grafana is an open-source visualization software, which helps the users to understand the complex data with the help of data metrics.
+
+It equips the users with features like alert systems, sharing of the dashboard.
+
+It also helps users in studying time-series analytics.
+
+Prometheus is an open-source event monitoring and alerting tool.
+
+
+
+
+
+
+
+
+
+Node Exporter
+
+wget https://github.com/prometheus/node_exporter/releases/download/v1.0.0-rc.1/node_exporter-1.0.0-rc.1.linux-amd64.tar.gz
+tar -xvzf node_exporter-1.0.0-rc.1.linux-amd64.tar.gz
+
+sudo vi /etc/systemd/system/node_exporter.service
+-----------
+[Unit]
+
+Description=node_exporter
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+
+User=prometheus
+Group=prometheus
+Type=simple
+ExecStart=/tmp/node_exporter-1.0.0-rc.1.linux-amd64/node_exporter
+
+[Install]
+
+WantedBy=multi-user.target
+-----------
+
+
+sudo systemctl daemon-reload
+
+sudo systemctl status node_exporter
+sudo systemctl start node_exporter
+
+default port is 9100
