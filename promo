@@ -10,11 +10,11 @@ mkdir /var/lib/prometheus – Will be used to store prometheus data
 
 mkdir /etc/prometheus – will be used to store configuration files
 
-cp /root/prometheus-2.18.1.linux-amd64/prometheus /usr/local/bin/
-cp /root/prometheus-2.18.1.linux-amd64/promtool /usr/local/bin/
-cp -r /root/prometheus-2.18.1.linux-amd64/consoles  /etc/prometheus/
-cp -r /root/prometheus-2.18.1.linux-amd64/console_libraries /etc/prometheus/
-cp /root/prometheus-2.18.1.linux-amd64/prometheus.yml  /etc/prometheus/
+cp /home/ec2-user/prometheus-2.18.1.linux-amd64/prometheus /usr/local/bin/
+cp /home/ec2-user/prometheus-2.18.1.linux-amd64/promtool /usr/local/bin/
+cp -r /home/ec2-user/prometheus-2.18.1.linux-amd64/consoles  /etc/prometheus/
+cp -r /home/ec2-user/prometheus-2.18.1.linux-amd64/console_libraries /etc/prometheus/
+cp /home/ec2-user/prometheus-2.18.1.linux-amd64/prometheus.yml  /etc/prometheus/
 
 
 vi /etc/systemd/system/prometheus.service
