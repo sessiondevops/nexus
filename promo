@@ -6,9 +6,9 @@ groupadd --system prometheus
 useradd -s /sbin/nologin -r -g prometheus prometheus
 
 
-/var/lib/prometheus – Will be used to store prometheus data
+mkdir /var/lib/prometheus – Will be used to store prometheus data
 
-/etc/prometheus – will be used to store configuration files
+mkdir /etc/prometheus – will be used to store configuration files
 
 cp /root/prometheus-2.18.1.linux-amd64/prometheus /usr/local/bin/
 cp /root/prometheus-2.18.1.linux-amd64/promtool /usr/local/bin/
