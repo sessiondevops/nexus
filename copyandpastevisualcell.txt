@@ -1,0 +1,22 @@
+Sub CopyFilteredCells()
+    'Updateby20150203
+    Dim rng1 As Range
+    Dim rng2 As Range
+    Dim InputRng As Range
+    Dim OutRng As Range
+    xTitleId     = "KutoolsforExcel"
+    Set InputRng = Application.Selection
+    Set InputRng = Application.InputBox("Copy Range :", xTitleId, InputRng.Address, Type: = 8)
+    Set OutRng   = Application.InputBox("Paste Range:", xTitleId, Type: = 8)
+    For Each rng1 In InputRng
+        rng1.Copy
+        For Each rng2 In OutRng
+            If rng2.EntireRow.RowHeight > 0 Then
+                rng2.PasteSpecial
+                Set OutRng = rng2.Offset(1).Resize(OutRng.Rows.Count)
+                Exit For
+            End If
+        Next
+    Next
+    Application.CutCopyMode = False
+End Sub

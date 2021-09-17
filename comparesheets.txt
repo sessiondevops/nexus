@@ -1,0 +1,12 @@
+Sub CompareSheets()
+Dim rngCell As Range
+ 
+For Each rngCell In Worksheets("Jan").UsedRange
+
+    If Not rngCell = Worksheets("Feb").Cells(rngCell.Row, rngCell.Column) Then
+        rngCell.Interior.Color = vbYellow
+    End If
+
+Next rngCell
+
+End Sub

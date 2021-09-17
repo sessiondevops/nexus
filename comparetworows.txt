@@ -1,0 +1,30 @@
+Sub test()
+ Dim r As Range, MatchA As Object, MatchB As Object, txt As String, i
+ With CreateObject("VBScript.RegExp")
+ .Global = True
+ For Each r In Cells(1).CurrentRegion.Columns(1).Cells
+ .Pattern = "[^-]+"
+ Set MatchA = .Execute(r.Value)
+ Set MatchB = .Execute(r(, 2).Value)
+ For i = 0 To MatchA.Count - 1
+ .Pattern = MatchA(i)
+ If Len(.Replace(MatchB(i), "")) Then
+ .Pattern = "(.*)(.+)(.*)" & Chr(2) & "(.*)(\2)(.*)"
+ txt = MatchA(i) & Chr(2) & MatchB(i)
+ Do While .test(txt)
+ txt = .Replace(txt, "$1$3" & Chr(2) & "$4$6")
+ Loop
+ If Len(Replace(txt, Chr(2), "")) Then
+ txt = Split(txt, Chr(2))(1)
+ .Pattern = txt
+ With r(, 2).Characters(MatchB(i).firstindex + 1 + _
+ .Execute(MatchB(i))(0).firstindex, Len(txt)).Font
+ .Bold = True
+ .Color = vbRed
+ End With
+ End If
+ End If
+ Next
+ Next
+ End With
+End Sub
